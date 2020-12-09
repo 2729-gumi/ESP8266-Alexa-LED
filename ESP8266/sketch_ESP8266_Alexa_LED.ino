@@ -55,8 +55,8 @@ akcjMS9cmvqtmg5iUaQqqcT5NJ0hGA==
 // AWS IoT Core config
 const char *aws_iam_key = "XXXXXXXXXXXXXXXXXXXX";
 const char *aws_iam_secret_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
-const char *aws_endpoint = "xxxxxxxxxxxxxxxxxx.iot.ap-northeast-1.amazonaws.com";
-const char *aws_region = "ap-northeast-1";
+const char *aws_endpoint = "xxxxxxxxxxxxxxxxxx.iot.us-west-2.amazonaws.com";
+const char *aws_region = "us-west-2";
 const int aws_port = 443; // Important !
 
 const char *aws_topic_shadow = "$aws/things/ESP8266/shadow/update";
@@ -118,10 +118,10 @@ void setup() {
 
   connectAWSIoTCore();
   
-  delay(100);
+  delay(500);
 
   /*** Report Initial LED State ***/
-  reportLedState(true);
+  reportLedState(false);
   
 }
 

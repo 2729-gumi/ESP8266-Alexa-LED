@@ -95,7 +95,7 @@ def send_response(response):
     return response
 
 
-client = boto3.client('iot-data', region_name='ap-northeast-1')
+client = boto3.client('iot-data', region_name='us-west-2')
 
 def update_thing_shadow(name, value) :
     obj = {
