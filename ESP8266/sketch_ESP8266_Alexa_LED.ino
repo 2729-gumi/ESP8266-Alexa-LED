@@ -185,13 +185,16 @@ void mqttCallback(char *topic, byte *payload, unsigned int length) {
     // Parse received message (JSON Format)
     JSONVar json = JSON.parse( (char *)payload );
     Serial.println( JSON.stringify(json) );
-    // Obtain desired LED state
-    JSONVar state = json["state"];    
-    bool led = state["led"];
-    // LED ON/OFF
-    digitalWrite(LED, led ? HIGH : LOW);
-    // Report current LED state
-    reportLedState(led);
+    JSONVar state = json["state"];
+
+    if ( state.hasOwnProperty("led") ){
+      // Obtain desired LED state
+      bool led = state["led"];
+      // LED ON/OFF
+      digitalWrite(LED, led ? HIGH : LOW);
+      // Report current LED state
+      reportLedState(led);
+    }
   }
 
 }
