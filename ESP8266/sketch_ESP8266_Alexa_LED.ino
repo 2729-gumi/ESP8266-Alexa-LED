@@ -21,7 +21,7 @@
 
 
 // AWS root certificate - expires 2037
-const char ca[] PROGMEM = R"EOF(
+const char *ca = R"EOF(
 -----BEGIN CERTIFICATE-----
 MIIEkjCCA3qgAwIBAgITBn+USionzfP6wq4rAfkI7rnExjANBgkqhkiG9w0BAQsF
 ADCBmDELMAkGA1UEBhMCVVMxEDAOBgNVBAgTB0FyaXpvbmExEzARBgNVBAcTClNj
@@ -63,11 +63,6 @@ const char *aws_topic_shadow = "$aws/things/ESP8266/shadow/update";
 const char *aws_topic_shadow_delta = "$aws/things/ESP8266/shadow/update/delta";
 
 
-// MQTT config
-const int maxMQTTpackageSize = 512;
-const int maxMQTTMessageHandlers = 1;
-
-
 AWSWebSocketClient awsWSclient(1000);
 PubSubClient mqttClient(awsWSclient);
 
@@ -77,7 +72,7 @@ PubSubClient mqttClient(awsWSclient);
 #define WIFI_PASS "xxxxxxxxxxxxx"
 
 // LED Pin #
-#define LED 4
+#define LED 16
 
 
 
@@ -118,8 +113,6 @@ void setup() {
 
   connectAWSIoTCore();
   
-  delay(500);
-
   /*** Report Initial LED State ***/
   reportLedState(false);
   
@@ -163,8 +156,6 @@ void connectAWSIoTCore() {
   
   Serial.print("Waiting for AWS IoT Core connection.");
 
-  delay(10000); // Important ! To Avoid Exception (9)
-  
   mqttClient.setServer(aws_endpoint, aws_port);
   if ( ! mqttClient.connect("HogeHoge") ){
     Serial.println(" Failed !");
